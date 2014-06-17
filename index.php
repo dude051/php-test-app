@@ -5,6 +5,7 @@ require 'vendor/autoload.php';
 $DBConfig = Array('host' => '', 'username' => '', 'password' => '', 'db_name' => '');
 
 
+
 $app = new \Slim\Slim(array(
     'templates.path' => './templates'
 ));
@@ -77,31 +78,17 @@ $app->get('/demo', function () use($app) {
         //$stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $res = $stmt->fetchAll();
-        die(var_dump($res));
-        if(count($res) > 0)
+        while($row = $stmt->fetch())
         {
-            $app->view()->setData(array('table_status' => "rs-table-status-ok", 'icon_status' => "rs-status-ok", 'message' => $res[0]));
-        }
-        else
-        {
-            $app->view()->setData(array('table_status' => "rs-table-status-error", 'icon_status' => "rs-status-error", 'message' => 'Unable to connect'));
+            if($row['Variable_name'] == 'version')
+            {
+                $app->view()->setData(array('table_status' => "rs-table-status-ok", 'icon_status' => "rs-status-ok", 'message' => $row['Value']));
+            }
         }
     }
     catch (PDOException $e) {
         $app->view()->setData(array('table_status' => "rs-table-status-error", 'icon_status' => "rs-status-error", 'message' => $e->getMessage()));
     }
-
-/*    
-        if(empty($res))
-        {
-            $app->view()->setData(array('status' => "rs-table-status-error", 'message' => $res['version']));
-        }
-        else
-        {
-            $app->view()->setData(array('status' => "rs-table-status-ok", 'message' => 'Unable to connect'));
-        }
-        */
     
     $app->render('demo.php');
 });
