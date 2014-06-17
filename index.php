@@ -2,7 +2,7 @@
 require 'vendor/autoload.php';
 
 // Database Config
-$DBConfig = Array('host' => '8335627faab0adf32a33c5aebaedbee9975e40a7.rackspaceclouddb.com', 'username' => 'demo2', 'password' => 'wcbduz6RjPMm7u', 'db_name' => 'demo');
+$DBConfig = Array('host' => '', 'username' => '', 'password' => '', 'db_name' => '');
 
 
 $app = new \Slim\Slim(array(
