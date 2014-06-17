@@ -7,51 +7,38 @@ $app = new \Slim\Slim(array(
 
 $app->get('/service/checks', function () use($app) {
     $app->view()->setData(array('message' => "This is all of our checks"));
-        $app->render('home.php');
+    $app->render('home.php');
 
-    });
 });
 
 $app->get('/service/checks/:id', function ($id) use($app) {
     $app->view()->setData(array('message' => "This is check ".$id));
-        $app->render('home.php');
-
-    });
+    $app->render('home.php');
 });
 
 $app->get('/service/checks/:id/status', function ($id) use($app) {
     $app->view()->setData(array('message' => "This is the status of check ".$id));
-        $app->render('home.php');
-
-    });
+    $app->render('home.php');
 });
 
 $app->get('/service/checks/:id/execute', function ($id) use($app) {
     $app->view()->setData(array('message' => "Executing check ".$id));
-        $app->render('home.php');
-
-    });
+    $app->render('home.php');
 });
 
 $app->post('/service/checks/add', function () use($app) {
     $app->view()->setData(array('message' => "Adding a new check"));
-        $app->render('home.php');
-
-    });
+    $app->render('home.php');
 });
 
 $app->put('/service/checks/:id', function ($id) use($app) {
     $app->view()->setData(array('message' => "Updating check ".$id));
-        $app->render('home.php');
-
-    });
+    $app->render('home.php');
 });
 
 $app->delete('/service/checks/:id', function ($id) use($app) {
     $app->view()->setData(array('message' => "Deleting check ".$id));
-        $app->render('home.php');
-
-    });
+    $app->render('home.php');
 });
 
 // Default route
