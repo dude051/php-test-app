@@ -33,6 +33,7 @@
         <div class="rs-content rs-panel">
           <div class="rs-inner">
             <h2 class="rs-page-title">Service status</h2>
+            <p><?php echo $this->data['message']; ?></p>
             <div class="rs-list-Table">
               <table>
                 <thread>
@@ -53,7 +54,7 @@
                     <ul class="rs-status-list">
                       <li class="rs-status-list-item tooltip-toggle">
                         <div class="rs-icon-status <?php echo $this->data['icon_status']; ?>"></div>
-                        <?php echo $this->data['message']; ?>
+                        <?php echo $this->data['check_status']; ?>
                       </li>
                     </ul>
                   </td>

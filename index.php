@@ -65,7 +65,19 @@ $app->view()->setData(array('message' => $uris));
 
 $app->get('/demo', function () use($app) {
 
-    $DBConfig = parse_ini_file('/etc/lampstack.ini');
+    $iniFile = '/etc/lampstack.ini';
+    try {
+        if (($DBConfig = @parse_ini_file($iniFile)) === false)
+        {
+            throw new Exception('Missing INI file: ' . $iniFile);
+        }
+        
+    }
+    catch (Exception $e) {
+        $app->view()->setData(array('table_status' => "rs-table-status-error", 'icon_status' => "rs-status-error", 'message' => $e->getMessage()));
+        $app->render('home.php');
+        $app->stop();
+    }
     
     try {
         $dbh = new PDO('mysql:host='.$DBConfig['host'].';dbname='.$DBConfig['db_name'], $DBConfig['username'], $DBConfig['password']);
@@ -76,12 +88,12 @@ $app->get('/demo', function () use($app) {
         {
             if($row['Variable_name'] == 'version')
             {
-                $app->view()->setData(array('table_status' => "rs-table-status-ok", 'icon_status' => "rs-status-ok", 'message' => $row['Value']));
+                $app->view()->setData(array('table_status' => "rs-table-status-ok", 'icon_status' => "rs-status-ok", 'check_status' => $row['Value']));
             }
         }
     }
     catch (PDOException $e) {
-        $app->view()->setData(array('table_status' => "rs-table-status-error", 'icon_status' => "rs-status-error", 'message' => $e->getMessage()));
+        $app->view()->setData(array('table_status' => "rs-table-status-error", 'icon_status' => "rs-status-error", 'check_status' => $e->getMessage()));
     }
     
     $app->render('demo.php');
