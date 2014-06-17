@@ -1,50 +1,64 @@
 <?php
 require 'vendor/autoload.php';
 
-$app = new \Slim\Slim();
+$app = new \Slim\Slim(array(
+    'templates.path' => './templates'
+));
 
-$app->get('/service/checks', function () {
-    echo "This is all of our checks";
+$app->get('/service/checks', function () use($app) {
+    $app->view()->setData(array('message' => "This is all of our checks"));
+        $app->render('home.php');
+
+    });
 });
 
-$app->get('/service/checks/:id', function ($id) {
-    echo "This is check ".$id;
+$app->get('/service/checks/:id', function ($id) use($app) {
+    $app->view()->setData(array('message' => "This is check ".$id));
+        $app->render('home.php');
+
+    });
 });
 
-$app->get('/service/checks/:id/status', function ($id) {
-    echo "This is the status of check ".$id;
+$app->get('/service/checks/:id/status', function ($id) use($app) {
+    $app->view()->setData(array('message' => "This is the status of check ".$id));
+        $app->render('home.php');
+
+    });
 });
 
-$app->get('/service/checks/:id/execute', function ($id) {
-    echo "Executing check ".$id;
+$app->get('/service/checks/:id/execute', function ($id) use($app) {
+    $app->view()->setData(array('message' => "Executing check ".$id));
+        $app->render('home.php');
+
+    });
 });
 
-$app->post('/service/checks/add', function () {
-    echo "Adding a new check";
+$app->post('/service/checks/add', function () use($app) {
+    $app->view()->setData(array('message' => "Adding a new check"));
+        $app->render('home.php');
+
+    });
 });
 
-$app->put('/service/checks/:id', function ($id) {
-    echo "Updating check ".$id;
+$app->put('/service/checks/:id', function ($id) use($app) {
+    $app->view()->setData(array('message' => "Updating check ".$id));
+        $app->render('home.php');
+
+    });
 });
 
-$app->delete('/service/checks/:id', function ($id) {
-    echo "Deleting check ".$id;
+$app->delete('/service/checks/:id', function ($id) use($app) {
+    $app->view()->setData(array('message' => "Deleting check ".$id));
+        $app->render('home.php');
+
+    });
 });
 
 // Default route
 // TODO: Setup a template
-$app->get('/', function () {
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Cache-Control" content="no-cache">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>PHP Sample App</title>
-</head>
-<body>
+$app->get('/', function () use($app) {
+
+$uris = <<<EOT
 <p>Available URIs</p>
 <ul>
     <li><a href="service/checks">Get all checks (GET)</a></li>
@@ -55,10 +69,18 @@ $app->get('/', function () {
     <li><a href="service/checks/5/execute">Execute Check (GET)</a></li>
     <li><a href="service/checks/add">Add check</a></li>
 </ul>
-</body>
-</html>
-<?php
+EOT;
+
+$app->view()->setData(array('message' => $uris));
+    $app->render('home.php');
+
 });
+
+$app->get('/demo', function () use($app) {
+    $app->view()->setData(array('message' => "THIS IS MY DEMO"));
+    $app->render('demo.php');
+});
+
 
 
 $app->run();
