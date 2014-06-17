@@ -46,13 +46,13 @@
 
                 <!--   Place Holder for each item -->
                 <tr>
-                  <td class="rs-table-status <?php echo $this->data['status']; ?>"></td>
+                  <td class="rs-table-status <?php echo $this->data['table_status']; ?>"></td>
                   <td class="rs-table-checkbox"><input type="checkbox" /></td>
                   <td class="rs-table-text">MySQL Service</td>
                   <td class="rs-table-status-list">
                     <ul class="rs-status-list">
                       <li class="rs-status-list-item tooltip-toggle">
-                        <div class="rs-icon-status rs-status-ok"></div>
+                        <div class="rs-icon-status <?php echo $this->data['icon_status']; ?>"></div>
                         <?php echo $this->data['message']; ?>
                       </li>
                     </ul>

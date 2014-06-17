@@ -2,7 +2,7 @@
 require 'vendor/autoload.php';
 
 // Database Config
-$DBConfig = Array('host' => '', 'username' => '', 'password' => '', 'db_name' => '');
+$DBConfig = Array('host' => '8335627faab0adf32a33c5aebaedbee9975e40a7.rackspaceclouddb.com', 'username' => 'demo2', 'password' => 'wcbduz6RjPMm7u', 'db_name' => 'demo');
 
 
 $app = new \Slim\Slim(array(
@@ -71,24 +71,25 @@ $app->get('/demo', function () use($app) {
 
     global $DBConfig;
     
-    // Setup our DB COnnection
-    $dbh = new PDO('mysql:host='.$DBConfig['host'].';dbname='.$DBConfig['db_name'], $DBConfig['username'], $DBConfig['password']);
     
     try {
+        $dbh = new PDO('mysql:host='.$DBConfig['host'].';dbname='.$DBConfig['db_name'], $DBConfig['username'], $DBConfig['password']);
+        //$stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $res = $stmt->fetch();
+        $res = $stmt->fetchAll();
+        die(var_dump($res));
         if(count($res) > 0)
         {
-            $app->view()->setData(array('status' => "rs-table-status-ok", 'message' => $res[0]));
+            $app->view()->setData(array('table_status' => "rs-table-status-ok", 'icon_status' => "rs-status-ok", 'message' => $res[0]));
         }
         else
         {
-            $app->view()->setData(array('status' => "rs-table-status-error", 'message' => 'Unable to connect'));
+            $app->view()->setData(array('table_status' => "rs-table-status-error", 'icon_status' => "rs-status-error", 'message' => 'Unable to connect'));
         }
     }
     catch (PDOException $e) {
-        $app->view()->setData(array('status' => "rs-table-status-error", 'message' => $e->getMessage()));
+        $app->view()->setData(array('table_status' => "rs-table-status-error", 'icon_status' => "rs-status-error", 'message' => $e->getMessage()));
     }
 
 /*    
