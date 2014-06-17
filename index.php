@@ -1,6 +1,10 @@
 <?php
 require 'vendor/autoload.php';
 
+// Database Config
+$DBConfig = Array('host' => '', 'username' => '', 'password' => '', 'db_name' => '');
+
+
 $app = new \Slim\Slim(array(
     'templates.path' => './templates'
 ));
@@ -64,7 +68,40 @@ $app->view()->setData(array('message' => $uris));
 });
 
 $app->get('/demo', function () use($app) {
-    $app->view()->setData(array('message' => "THIS IS MY DEMO"));
+
+    global $DBConfig;
+    
+    // Setup our DB COnnection
+    $dbh = new PDO('mysql:host='.$DBConfig['host'].';dbname='.$DBConfig['db_name'], $DBConfig['username'], $DBConfig['password']);
+    
+    try {
+        $stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $res = $stmt->fetch();
+        if(count($res) > 0)
+        {
+            $app->view()->setData(array('status' => "rs-table-status-ok", 'message' => $res[0]));
+        }
+        else
+        {
+            $app->view()->setData(array('status' => "rs-table-status-error", 'message' => 'Unable to connect'));
+        }
+    }
+    catch (PDOException $e) {
+        $app->view()->setData(array('status' => "rs-table-status-error", 'message' => $e->getMessage()));
+    }
+
+/*    
+        if(empty($res))
+        {
+            $app->view()->setData(array('status' => "rs-table-status-error", 'message' => $res['version']));
+        }
+        else
+        {
+            $app->view()->setData(array('status' => "rs-table-status-ok", 'message' => 'Unable to connect'));
+        }
+        */
+    
     $app->render('demo.php');
 });
 

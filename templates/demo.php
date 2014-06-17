@@ -33,10 +33,6 @@
         <div class="rs-content rs-panel">
           <div class="rs-inner">
             <h2 class="rs-page-title">Service status</h2>
-            <div class="rs-btn-group">
-              <a href="create.html" class="rs-btn rs-btn-primary">Add Service</a>
-              <button class="rs-btn" disabled>Delete</button>
-            </div>
             <div class="rs-list-Table">
               <table>
                 <thread>
@@ -50,14 +46,14 @@
 
                 <!--   Place Holder for each item -->
                 <tr>
-                  <td class="rs-table-status rs-table-status-ok"></td>
+                  <td class="rs-table-status <?php echo $this->data['status']; ?>"></td>
                   <td class="rs-table-checkbox"><input type="checkbox" /></td>
                   <td class="rs-table-text">MySQL Service</td>
                   <td class="rs-table-status-list">
                     <ul class="rs-status-list">
-                      <li class="rs-status-list-item tooltip-toggle" title="<div class='rs-no-wrap rs-status-ok'>
-                        MySQL Service OK</div><p class='rs-no-wrap rs-quiet'>MySQL Version: 5.5.1</p>">
+                      <li class="rs-status-list-item tooltip-toggle">
                         <div class="rs-icon-status rs-status-ok"></div>
+                        <?php echo $this->data['message']; ?>
                       </li>
                     </ul>
                   </td>
