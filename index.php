@@ -1,11 +1,6 @@
 <?php
 require 'vendor/autoload.php';
 
-// Database Config
-$DBConfig = Array('host' => '', 'username' => '', 'password' => '', 'db_name' => '');
-
-
-
 $app = new \Slim\Slim(array(
     'templates.path' => './templates'
 ));
@@ -70,8 +65,7 @@ $app->view()->setData(array('message' => $uris));
 
 $app->get('/demo', function () use($app) {
 
-    global $DBConfig;
-    
+    $DBConfig = parse_ini_file('/etc/lampstack.ini');
     
     try {
         $dbh = new PDO('mysql:host='.$DBConfig['host'].';dbname='.$DBConfig['db_name'], $DBConfig['username'], $DBConfig['password']);
