@@ -16,3 +16,11 @@ Update the installed packages or install them in the first place by running
 
 This app loads an ini file located at (/etc/lampstack.ini) and connects to a database with those credentials (only on /demo) and provides a green/red indicator if the connection work and displays the MySQL Version.
 
+Sample lampstack.ini
+```
+[Database]
+host = localhost
+username = php_demo_user
+password = password
+db_name = php_demo
+```
