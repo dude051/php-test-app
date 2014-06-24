@@ -99,7 +99,7 @@ $app->get('/', function () use($app) {
     $app->render('demo.php');
 });
 
-$app->get('/demo', function ($id) use($app) {
+$app->get('/demo', function () use($app) {
     $app->redirect('/');
 });
 
