@@ -43,7 +43,7 @@ $app->delete('/service/checks/:id', function ($id) use($app) {
 
 // Default route
 // TODO: Setup a template
-$app->get('/', function () use($app) {
+$app->get('/checks', function () use($app) {
 
 $uris = <<<EOT
 <p>Available URIs</p>
@@ -63,9 +63,9 @@ $app->view()->setData(array('message' => $uris));
 
 });
 
-$app->get('/demo', function () use($app) {
+$app->get('/', function () use($app) {
 
-    $iniFile = '/etc/lampstack.ini';
+    $iniFile = '/etc/phpstack.ini';
     try {
         if (($DBConfig = @parse_ini_file($iniFile)) === false)
         {
@@ -99,6 +99,9 @@ $app->get('/demo', function () use($app) {
     $app->render('demo.php');
 });
 
+$app->get('/demo', function ($id) use($app) {
+    $app->redirect('/');
+});
 
 
 $app->run();
