@@ -67,7 +67,7 @@ $app->get('/', function () use($app) {
 
     $iniFile = '/etc/phpstack.ini';
     try {
-        if (($DBConfig = @parse_ini_file($iniFile)) === false)
+        if (($DBConfig = @parse_ini_file($iniFile, true)) === false)
         {
             throw new Exception('Missing INI file: ' . $iniFile);
         }
@@ -79,8 +79,14 @@ $app->get('/', function () use($app) {
         $app->stop();
     }
     
+    // If our host is empty, connect to localhost
+    if(empty($DBConfig['MySQL-example.com']['master-host']))
+    {
+        $DBConfig['MySQL-example.com']['master-host'] = 'localhost';
+    }
+    
     try {
-        $dbh = new PDO('mysql:host='.$DBConfig['host'].';dbname='.$DBConfig['db_name'], $DBConfig['username'], $DBConfig['password']);
+        $dbh = new PDO('mysql:host='.$DBConfig['MySQL-example.com']['master-host'].';dbname='.$DBConfig['MySQL-example.com']['db_name'], $DBConfig['MySQL-example.com']['username'], $DBConfig['MySQL-example.com']['password']);
         //$stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt->setFetchMode(PDO::FETCH_ASSOC);

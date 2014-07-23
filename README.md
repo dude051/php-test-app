@@ -3,7 +3,7 @@ PHP Test Application
 
 A basic PHP application using Composer (https://getcomposer.org/) and the Slim Framework (http://www.slimframework.com/).
 
-Originally designed to be a headless web service, the demo page (/demo) was added to do basic test functionality. The index page shows a list of web service calls that can be expanded and used by a common front end for building a basic health check/status page.
+Originally designed to be a headless web service, the main page currently does a sample connection to MySQL and prints the version. The checks page (/checks) shows a list of web service calls that can be expanded and used by a common front end for building a basic health check/status page.
 
 Getting Started
 ============
@@ -18,9 +18,11 @@ This app loads an ini file located at (/etc/phpstack.ini) and connects to a data
 
 Sample phpstack.ini
 ```
-[Database]
-host = localhost
-username = php_demo_user
-password = password
-db_name = php_demo
+[MySQL-example.com]
+master-host = hostname
+slave-hosts[] = hostname
+port = 3306
+db_name = example.com
+username = example.com
+password = some_random_password
 ```
