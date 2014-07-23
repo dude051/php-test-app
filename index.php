@@ -67,7 +67,7 @@ $app->get('/', function () use($app) {
 
     $iniFile = '/etc/phpstack.ini';
     try {
-        if (($DBConfig = @parse_ini_file($iniFile)) === false)
+        if (($DBConfig = @parse_ini_file($iniFile, true)) === false)
         {
             throw new Exception('Missing INI file: ' . $iniFile);
         }
