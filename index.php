@@ -86,7 +86,7 @@ $app->get('/', function () use($app) {
     }
     
     try {
-        $dbh = new PDO('mysql:host='.$DBConfig['host'].';dbname='.$DBConfig['MySQL-example.com']['db_name'], $DBConfig['MySQL-example.com']['username'], $DBConfig['MySQL-example.com']['password']);
+        $dbh = new PDO('mysql:host='.$DBConfig['MySQL-example.com']['master-host'].';dbname='.$DBConfig['MySQL-example.com']['db_name'], $DBConfig['MySQL-example.com']['username'], $DBConfig['MySQL-example.com']['password']);
         //$stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
