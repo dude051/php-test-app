@@ -80,13 +80,13 @@ $app->get('/', function () use($app) {
     }
     
     // If our host is empty, connect to localhost
-    if(empty($DBConfig['MySQL-example.com']['master-host']))
+    if(empty($DBConfig['MySQL-example.com-example.com']['master-host']))
     {
-        $DBConfig['MySQL-example.com']['master-host'] = 'localhost';
+        $DBConfig['MySQL-example.com-example.com']['master-host'] = 'localhost';
     }
     
     try {
-        $dbh = new PDO('mysql:host='.$DBConfig['MySQL-example.com']['master-host'].';dbname='.$DBConfig['MySQL-example.com']['db_name'], $DBConfig['MySQL-example.com']['username'], $DBConfig['MySQL-example.com']['password']);
+        $dbh = new PDO('mysql:host='.$DBConfig['MySQL-example.com-example.com']['master-host'].';dbname='.$DBConfig['MySQL-example.com-example.com']['db_name'], $DBConfig['MySQL-example.com-example.com']['username'], $DBConfig['MySQL-example.com-example.com']['password']);
         //$stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt = $dbh->query('SHOW VARIABLES LIKE "%version%"');
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
